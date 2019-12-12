@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>WhatsApp</title>
+  </head>
+  <body>
+    <h1>WhatsApp</h1>
+    <div>
+      <table>
+        <tr>
+          <th>Websocket</th>
+          <th>User</th>
+          <th>Password</th></tr>
+        <tr>
+          <td><input [(ngModel)]="websocket"></td>
+          <td><input [(ngModel)]="user"></td>
+          <td><input type="password" [(ngModel)]="password"></td>
+        </tr>
+      </table>
+    </div>
+    <button>Connect</button>
+    <button>Disconnect</button>
+    <div></div>
+  </body>
+</html>
