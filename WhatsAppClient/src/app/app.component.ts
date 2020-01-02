@@ -10,7 +10,7 @@ export class AppComponent {
   
   user : string = '';
   password : string = '';
-  //groups : string[] = [];
+  groups : string[] = [];
 
   hide : boolean = true;
   websocket : WebSocket;
