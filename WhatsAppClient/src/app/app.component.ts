@@ -9,7 +9,7 @@ export class AppComponent {
   websocketURL : string = '';
   user : string = '';
   password : string = '';
-
+  hide : boolean = true;
   websocket : WebSocket;
 
   text : string = '';
