@@ -12,7 +12,9 @@ services:
             - ${PWD}/mariadb:/var/lib/mysql
     nginx:
         build: ./WhatsAppClient
-        ports: 80:80
+        ports: 
+            - 80:80
     server:
         build: ./Server
-        ports: 8080:8080
+        ports: 
+            - 8080:8080

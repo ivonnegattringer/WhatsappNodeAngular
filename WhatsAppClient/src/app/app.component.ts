@@ -7,8 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   websocketURL : string = '';
+  
   user : string = '';
   password : string = '';
+  //groups : string[] = [];
+
   hide : boolean = true;
   websocket : WebSocket;
 
