@@ -1,15 +1,26 @@
 version: '3.0'
 services: 
-    db:
-        image: mariadb:10.4
-        restart: always
-        environment: 
+    mariadb:
+        image: mariadb:10.4.5
+        container_name: mariadb
+        environment:
             MYSQL_ROOT_PASSWORD: passme
             MYSQL_DATABASE: WhatsAppDB
             MYSQL_USER: user
             MYSQL_PASSWORD: passme
-        volumes: 
-            - ${PWD}/mariadb:/var/lib/mysql
+        ports:
+            - 3306:3306
+        volumes:
+            -  ${PWD}/mariadb:/var/lib/mysql
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mariadb:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_ROOT_PASSWORD: passme
     nginx:
         build: ./WhatsAppClient
         ports: 
@@ -17,4 +28,4 @@ services:
     server:
         build: ./Server
         ports: 
-            - 8080:8080
+            - 8080:8000
