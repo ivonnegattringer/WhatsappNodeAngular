@@ -10,17 +10,25 @@ export class AppComponent {
   
   user : string = '';
   password : string = '';
-  //groups : string[] = [];
+  groups : string[] = [];
 
   hide : boolean = true;
   websocket : WebSocket;
 
+  gotMessages : Array<string> = [];
   text : string = '';
+  
 
   connect(){
     this.websocket = new WebSocket(this.websocketURL);
-
-    //this.websocket.onopen = (evt) => this.receiveText += 'Websocket'
+    this.websocket.onopen = (evt) => 'Websocket conected\n'
+      this.websocket.onmessage = (evt) => {
+        let message  = JSON.parse(evt.data);
+        switch(message.type){
+          case 'data':
+            this.gotMessages.push(message);
+        }
+      }
   }
   
   disconnect(){
