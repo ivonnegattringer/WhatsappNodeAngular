@@ -32,35 +32,42 @@
         You are now connected.
         <br>
         <div>
-          <button mat-button matStepperPrevious>Disconnect</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button matStepperPrevious (click)="disconnect()">Disconnect</button>
+          <button mat-button (click)="stepper.reset()" (click)="disconnect()">Reset</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
   </div>
 </mat-card>
 <br>
-<mat-card>
-  <div>
-    <mat-form-field>
-      <mat-label>Group</mat-label>
-      <mat-select [(ngModel)]="groups">
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <mat-form-field style="width: 50%;">
-      <textarea matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Text" [(ngModel)]="gotMessages"></textarea>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field style="width: 50%;">
-      <textarea matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Text" [(ngModel)]="text"></textarea>
-    </mat-form-field>
-    <div style="text-align: center;">
-      <button mat-button>Send</button>
+<div *ngIf="showInterface">
+  <mat-card>
+    <div>
+      <mat-form-field>
+        <mat-label>Group</mat-label>
+        <mat-select [(value)]="selectedGroup" (change)="groupChanged()">
+          <div *ngFor="let group of groups">
+            <mat-option [value]="group" >{{group}}</mat-option>
+          </div>
+        </mat-select>
+      </mat-form-field>
     </div>
-  </div>
-</mat-card>
+    <div>
+      <mat-form-field style="width: 50%;">
+        <textarea matInput matTextareaAutosize matAutosizeMinRows=3  [(ngModel)]="gotMessages"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field style="width: 50%;">
+        <textarea matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Text" [(ngModel)]="text"></textarea>
+      </mat-form-field>
+      <div style="text-align: center;">
+        <button [disabled]="selectedGroup == ''" mat-button (click)="send()">Send</button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+
+
 

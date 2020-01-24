@@ -11,8 +11,10 @@ export class AppComponent {
   username : string = '';
   password : string = '';
   groups : string[] = [];
+  selectedGroup : string = '';
 
   hide : boolean = true;
+  showInterface : boolean = false;
   websocket : WebSocket;
 
   gotMessages : Array<string> = [];
@@ -25,7 +27,11 @@ export class AppComponent {
         let message  = JSON.parse(evt.data);
         switch(message.type){
           case 'data':
-            this.gotMessages.push(message);
+            this.gotMessages.concat(message.message);
+          case 'get_groups':
+            this.groups = message.groups;
+          case 'login_return':
+            this.showInterface = message.value
         }
       }
   }
@@ -35,12 +41,16 @@ export class AppComponent {
   }
 
   send(){
-    this.websocket.send(this.text);
+    this.websocket.send(`{"type": "data", "message": "${this.text}"`);
   }
 
   sendUserCredentials(){
-    let json = JSON.parse(`{"type": "login", "username": "${this.username}", "password":"${this.password}"}`);
-    this.websocket.send(json);
+    this.websocket.send(`{"type": "login", "username": "${this.username}", "password":"${this.password}"}`);
+  }
+
+  groupChanged(){
+    
+    this.websocket.send(`{"type": "change_group", "group": "${this.selectedGroup}"`);
   }
 
 }
