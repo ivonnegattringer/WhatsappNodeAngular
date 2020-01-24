@@ -4,32 +4,69 @@ import * as Http from 'http';
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
+let groups = {"groups": ["linguee", "linda", "rida"]};
 
 
 console.log('Server listening on port ' + port);
 
-wss.on('connection', function connection(ws, request,client) {
+var allUsers = new Array();
+
+wss.on('connection', function connection(ws) {
+  var username;
+  var password;
+  var websocket = {socket: ws, joinedGroup: ''};
     ws.on('message', data=> {
-      let message = JSON.parse(data);
-      //console.log(request);
-      console.log(request);
-      
+      let message = JSON.parse(data.toString());
+      console.log(data);
       switch(message.type){
         case 'data':
-          var rep = ws.client + " "+ message.message;
-          ws.send(rep);
-          //console.log(client + " "+ message.message)
-          console.log("got here hell yeah")
+          var rep = username + " "+ message.message;
+          boradcast(rep, websocket.joinedGroup);
+          break;
+        case 'login':
+          username = message.username;
+          password = message.password;
+          
+          allUsers.push(websocket);
+          console.log(allUsers.length);
+          break;
+        case 'get_groups':
+          ws.send(groups);  
+          break;
+        case 'change_group':
+          websocket.joinedGroup = message.group;
           break;
         default:
           ws.send('yikes');
           break;
       }
     });
+    ws.on('close', function() {
+      removeClient(ws);
+    });
   });
 
-/*function boradcast (data: string){
-    wss.clients.forEach(client => { 
-        if(client.readyState === WebSocket.OPEN) client.send(data);
-    });
-}*/
+function removeClient(ws){
+  for(let i = 0; i < allUsers.length; i++){
+    if(allUsers[i].socket === ws){
+      allUsers.splice(i,1);
+      console.log('remove client');
+    }
+  }
+}
+
+function getWebsocket(ws){
+  for(let i = 0; i < allUsers.length; i++){
+    if(allUsers[i].socket === ws){
+      return allUsers[i];
+    }
+  }
+}
+
+function boradcast (data: string, activegroup:string){
+    allUsers.forEach(josh =>{
+      if(josh.socket.readyState == WebSocket.OPEN && activegroup.localeCompare(josh.joinedGroup) == 0 && activegroup != ''){
+        josh.socket.send(data);
+      }
+    })
+}
