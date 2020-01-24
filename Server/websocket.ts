@@ -3,18 +3,23 @@ import * as Http from 'http';
 //https://github.com/websockets/ws/tree/master/examples/express-session-parse
 
 const port = 8000;
-const server = Http.createServer();
-const wss = new WebSocket.Server({noServer: true});
+const wss = new WebSocket.Server({port:port});
 
 
 console.log('Server listening on port ' + port);
 
-wss.on('connection', function connection(ws, request, client) {
+wss.on('connection', function connection(ws, request,client) {
     ws.on('message', data=> {
       let message = JSON.parse(data);
+      //console.log(request);
+      console.log(request);
+      
       switch(message.type){
         case 'data':
-          ws.send({type: 'data', reply: 'i got a reakin message u stupid kiddo'});
+          var rep = ws.client + " "+ message.message;
+          ws.send(rep);
+          //console.log(client + " "+ message.message)
+          console.log("got here hell yeah")
           break;
         default:
           ws.send('yikes');
@@ -28,5 +33,3 @@ wss.on('connection', function connection(ws, request, client) {
         if(client.readyState === WebSocket.OPEN) client.send(data);
     });
 }*/
-
-server.listen(port);
