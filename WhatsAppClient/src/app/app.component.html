@@ -10,7 +10,7 @@
           <input matInput placeholder="URL" required [(ngModel)]="websocketURL">
         </mat-form-field>
         <br>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="connect()">Next</button>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>User credentials</ng-template>

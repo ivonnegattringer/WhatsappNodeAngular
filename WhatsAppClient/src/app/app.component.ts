@@ -28,10 +28,15 @@ export class AppComponent {
         switch(message.type){
           case 'data':
             this.gotMessages.concat(message.message);
-          case 'get_groups':
+            break;
+          case 'groups':
+
+            this.text = "nice";
             this.groups = message.groups;
+            break;
           case 'login_return':
-            this.showInterface = message.value
+            this.showInterface = message.value;
+            break;
         }
       }
   }
@@ -46,6 +51,8 @@ export class AppComponent {
 
   sendUserCredentials(){
     this.websocket.send(`{"type": "login", "username": "${this.username}", "password":"${this.password}"}`);
+
+    this.websocket.send('{"type": "get_groups"}');
   }
 
   groupChanged(){
