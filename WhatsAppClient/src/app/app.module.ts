@@ -20,7 +20,6 @@ import { MatInputModule, MatCardModule, MatStepperModule, MatButtonModule, MatIc
     MatButtonModule,
     MatIconModule,
     MatSelectModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
