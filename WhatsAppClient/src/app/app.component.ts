@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   websocketURL : string = '';
   
-  user : string = '';
+  username : string = '';
   password : string = '';
   groups : string[] = [];
 
@@ -17,7 +17,6 @@ export class AppComponent {
 
   gotMessages : Array<string> = [];
   text : string = '';
-  
 
   connect(){
     this.websocket = new WebSocket(this.websocketURL);
@@ -39,5 +38,9 @@ export class AppComponent {
     this.websocket.send(this.text);
   }
 
+  sendUserCredentials(){
+    let json = JSON.parse(`{"type": "login", "username": "${this.username}", "password":"${this.password}"}`);
+    this.websocket.send(json);
+  }
 
 }
