@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true
+    },
+    "files": [
+        "./websocket.ts",
+        "./repository/repository.ts",
+        "./controller/user.controller.ts",
+        "./controller/group.controller.ts",
+        "./entity/user.ts"
+    ]
+}
