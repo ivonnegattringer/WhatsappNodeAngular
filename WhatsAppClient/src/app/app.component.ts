@@ -22,23 +22,26 @@ export class AppComponent {
 
   connect(){
     this.websocket = new WebSocket(this.websocketURL);
-    this.websocket.onopen = (evt) => 'Websocket conected\n'
-      this.websocket.onmessage = (evt) => {
-        let message  = JSON.parse(evt.data);
-        switch(message.type){
-          case 'data':
-            this.gotMessages.concat(message.message);
-            break;
-          case 'groups':
+    this.websocket.onopen = (evt) => 'Websocket conected\n';
+    this.websocket.onmessage = (evt) => {
+      let message  = JSON.parse(evt.data);
+      switch(message.type){
+        case 'data':
+          this.gotMessages.concat(message.message);
+          break;
+        case 'get_groups':
 
-            this.text = "nice";
-            this.groups = message.groups;
-            break;
-          case 'login_return':
-            this.showInterface = message.value;
-            break;
-        }
+          this.text = "nice";
+          this.groups = message.groups;
+          break;
+        case 'login_return':
+          this.showInterface = message.value;
+          break;
+        default:
+          this.text = "default";
+          break;
       }
+    }
   }
   
   disconnect(){
