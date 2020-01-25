@@ -1,10 +1,9 @@
 import * as WebSocket from 'ws';
-import * as Http from 'http';
 //https://github.com/websockets/ws/tree/master/examples/express-session-parse
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
-let groups = {"groups": ["linguee", "linda", "rida"]};
+let groups = ["linguee", "linda", "rida"];
 
 
 console.log('Server listening on port ' + port);
