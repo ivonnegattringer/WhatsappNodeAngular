@@ -4,7 +4,7 @@ import * as Http from 'http';
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
-let groups = {"groups": ["linguee", "linda", "rida"]};
+let groups = '{"groups": ["linguee", "linda", "rida"]}';
 
 
 console.log('Server listening on port ' + port);
@@ -32,7 +32,8 @@ wss.on('connection', function connection(ws) {
           ws.send(JSON.stringify({type: "login_return", value:true}))
           break;
         case 'get_groups':
-          ws.send({type: "get_groups", groups: groups});   
+          ws.send(JSON.stringify({type: "get_groups", groups: groups}));   
+
           break;
         case 'change_group':
           websocket.joinedGroup = message.group;
