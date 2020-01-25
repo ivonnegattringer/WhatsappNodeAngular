@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  websocketURL : string = '';
+  websocketURL : string = 'ws://';
   
   username : string = '';
   password : string = '';
@@ -17,28 +17,29 @@ export class AppComponent {
   showInterface : boolean = false;
   websocket : WebSocket;
 
-  gotMessages : Array<string> = [];
+  gotMessages : Array<string> = ['test\n', 'test2\n'];
   text : string = '';
 
+  test : string = '';
   connect(){
     this.websocket = new WebSocket(this.websocketURL);
     this.websocket.onopen = (evt) => 'Websocket conected\n';
     this.websocket.onmessage = (evt) => {
       let message  = JSON.parse(evt.data);
+      this.test = message;
       switch(message.type){
         case 'data':
-          this.gotMessages.concat(message.message);
+          this.test = message.message;
+          this.gotMessages.push(message.message + '\n');
           break;
         case 'get_groups':
-
-          this.text = "nice";
           this.groups = message.groups;
           break;
         case 'login_return':
           this.showInterface = message.value;
           break;
         default:
-          this.text = "default";
+          this.test = "default";
           break;
       }
     }
@@ -49,7 +50,8 @@ export class AppComponent {
   }
 
   send(){
-    this.websocket.send(`{"type": "data", "message": "${this.text}"`);
+    this.websocket.send(`{"type": "data", "message": "${this.text}"}`);
+    this.text = '';
   }
 
   sendUserCredentials(){
@@ -59,8 +61,7 @@ export class AppComponent {
   }
 
   groupChanged(){
-    
-    this.websocket.send(`{"type": "change_group", "group": "${this.selectedGroup}"`);
+    this.websocket.send(`{"type": "change_group", "group": "${this.selectedGroup}"}`);
   }
 
 }
