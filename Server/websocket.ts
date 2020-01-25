@@ -11,7 +11,7 @@ console.log('Server listening on port ' + port);
 var allUsers = new Array();
 
 wss.on('connection', function connection(ws) {
-  var username;
+  var username:string;
   var password;
   var websocket = {socket: ws, joinedGroup: ''};
     ws.on('message', data=> {
@@ -47,7 +47,7 @@ wss.on('connection', function connection(ws) {
     });
   });
 
-function removeClient(ws){
+function removeClient(ws:any){
   for(let i = 0; i < allUsers.length; i++){
     if(allUsers[i].socket === ws){
       allUsers.splice(i,1);
@@ -56,7 +56,7 @@ function removeClient(ws){
   }
 }
 
-function getWebsocket(ws){
+function getWebsocket(ws:any){
   for(let i = 0; i < allUsers.length; i++){
     if(allUsers[i].socket === ws){
       return allUsers[i];
