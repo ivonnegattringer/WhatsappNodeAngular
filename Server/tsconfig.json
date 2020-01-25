@@ -4,13 +4,15 @@
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "outDir": "./dist"
     },
     "files": [
         "./websocket.ts",
-        "./repository/repository.ts",
-        "./controller/user.controller.ts",
-        "./controller/group.controller.ts",
-        "./entity/user.ts"
+        "./repository/respository.ts",
+        "./server.ts",
+        "./entity/user.ts",
+        "./entity/group.ts"
     ]
 }
