@@ -8,6 +8,10 @@ const port = 2000;
 app.use(express.json());
 //app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/api/echo', (request,response)=>{
+    response.send('Hello');
+});
+
 // define controller per route
 // start server
 app.listen(port, () => {
