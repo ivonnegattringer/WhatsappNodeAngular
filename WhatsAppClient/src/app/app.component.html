@@ -1,6 +1,5 @@
 <h1 style="color: purple; text-align: center;">Whats App</h1>
 
-{{test}}
 <br>
 <mat-card>
   <div class="connect">
@@ -47,7 +46,7 @@
     <div>
       <mat-form-field>
         <mat-label>Group</mat-label>
-        <mat-select [(value)]="selectedGroup" (change)="groupChanged()">
+        <mat-select [(value)]="selectedGroup" (selectionChange)="groupChanged()">
           <div *ngFor="let group of groups">
             <mat-option [value]="group" >{{group}}</mat-option>
           </div>

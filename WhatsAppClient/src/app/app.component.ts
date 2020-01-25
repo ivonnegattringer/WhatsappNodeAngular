@@ -17,20 +17,18 @@ export class AppComponent {
   showInterface : boolean = false;
   websocket : WebSocket;
 
-  gotMessages : Array<string> = ['test\n', 'test2\n'];
+  gotMessages : string = '';
   text : string = '';
-
-  test : string = '';
   connect(){
     this.websocket = new WebSocket(this.websocketURL);
     this.websocket.onopen = (evt) => 'Websocket conected\n';
     this.websocket.onmessage = (evt) => {
       let message  = JSON.parse(evt.data);
-      this.test = message;
+     // this.test = evt.data; //for testing
       switch(message.type){
         case 'data':
-          this.test = message.message;
-          this.gotMessages.push(message.message + '\n');
+         // this.test = message.message; //for testing
+          this.gotMessages+= message.message+'\n';
           break;
         case 'get_groups':
           this.groups = message.groups;
@@ -39,7 +37,7 @@ export class AppComponent {
           this.showInterface = message.value;
           break;
         default:
-          this.test = "default";
+          //this.test = "default"; //fortesting
           break;
       }
     }
