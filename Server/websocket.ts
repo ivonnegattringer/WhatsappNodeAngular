@@ -29,15 +29,16 @@ wss.on('connection', function connection(ws) {
           
           allUsers.push(websocket);
           console.log(allUsers.length);
+          ws.send(JSON.stringify({type: "login_return", value:true}))
           break;
         case 'get_groups':
-          ws.send(groups);  
+          ws.send({type: "get_groups", groups: groups});   
           break;
         case 'change_group':
           websocket.joinedGroup = message.group;
           break;
         default:
-          ws.send('yikes');
+          ws.send(JSON.stringify({type:"data", message:'yikes'}));
           break;
       }
     });
@@ -64,9 +65,11 @@ function getWebsocket(ws){
 }
 
 function boradcast (data: string, activegroup:string){
+    
     allUsers.forEach(josh =>{
+      //console.log(josh.joinedGroup +" "+ activegroup);
       if(josh.socket.readyState == WebSocket.OPEN && activegroup.localeCompare(josh.joinedGroup) == 0 && activegroup != ''){
-        josh.socket.send(data);
+        josh.socket.send(JSON.stringify({type:"data", message: data}));
       }
     })
 }
