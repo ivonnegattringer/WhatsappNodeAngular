@@ -19,7 +19,7 @@ wss.on('connection', function connection(ws) {
       console.log(data);
       switch(message.type){
         case 'data':
-          var rep = username + " "+ message.message;
+          var rep = username + ": "+ message.message;
           boradcast(rep, websocket.joinedGroup);
           break;
         case 'login':
