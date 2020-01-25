@@ -4,7 +4,7 @@ import * as Http from 'http';
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
-let groups = '{"groups": ["linguee", "linda", "rida"]}';
+let groups = {"groups": ["linguee", "linda", "rida"]};
 
 
 console.log('Server listening on port ' + port);
