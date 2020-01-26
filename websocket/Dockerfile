@@ -8,6 +8,6 @@ RUN npm install
 COPY . .
 EXPOSE 8080
 RUN npm install tsc -g
-RUN npm run tsc
+RUN npm run tsc websocket.ts
 
-CMD node /usr/src/app/dist/server.js && node /usr/src/app/dist/websocket.js
+CMD node /usr/src/app/websocket.js

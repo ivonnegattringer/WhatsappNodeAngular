@@ -18,6 +18,7 @@ export class Repository{
     }
 
     private initDatabase(){
+        console.log("init Database");
         this.findAllUsers().then(data=>{
             if(data.length == 0)return;
             this.connection.then(con=>{
@@ -56,6 +57,7 @@ export class Repository{
     }
 
     public async findAllUsers():Promise<User[]>{
+        console.log("finde users")
         let savedUsers = await this.connection.then(async con => {
             return await con.manager.find(User);
         });

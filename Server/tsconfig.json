@@ -9,7 +9,6 @@
         "outDir": "./dist"
     },
     "files": [
-        "./websocket.ts",
         "./repository/respository.ts",
         "./server.ts",
         "./entity/user.ts",
