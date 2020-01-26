@@ -54,7 +54,7 @@ export class AppComponent {
 
   sendUserCredentials(){
     this.websocket.send(`{"type": "login", "username": "${this.username}", "password":"${this.password}"}`);
-
+    
     this.websocket.send('{"type": "get_groups"}');
   }
 
