@@ -23,7 +23,7 @@ server.get('/get/user/', async  (request, response) => {
     }
     
     var user = repo.findAllUsers().then(data => {
-        return data.find(u => u.username == username && u.password == password)
+        return data.find(u => u.username == username && u.password == password);
     });
     console.log(user);
     if(user == null){

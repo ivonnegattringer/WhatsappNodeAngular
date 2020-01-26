@@ -8,10 +8,10 @@ export class User{
    // @Column()
     //id: number;
     //@Column()
-    @PrimaryColumn({type: "varchar2"})
+    @PrimaryColumn("varchar")
     username : string;
     
-    @Column({type: "varchar2"})
+    @Column("varchar")
     password : string;
 
     @ManyToMany(type=> Group)
