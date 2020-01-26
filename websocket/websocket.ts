@@ -1,6 +1,7 @@
 import * as WebSocket from 'ws';
 //import http from "https";
 import * as axios from 'axios';
+import http from "http";
 //https://github.com/websockets/ws/tree/master/examples/express-session-parse
 
 const port = 8000;
@@ -31,11 +32,15 @@ wss.on('connection', function connection(ws) {
 
           let correct = false;
 
-          axiosuse.get('http://localhost:2000/get/user/?username='+ username+'&password='+password)
-                .then(response=> {
-                  console.log("fuck");
-                  console.log("first login response: "+ response);
-                });
+          http.get('http://localhost:2000/get/user/?username='+ username+'&password='+password, (resp) => {
+            resp.on('data', data => {
+                console.log("Successfullly sent keyword-event to Masterservice"+ data);
+            })
+
+        }).on('error', error => {
+            console.error(error);
+        });
+    
           
           //https://www.npmjs.com/package/axios
           //https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
