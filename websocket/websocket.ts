@@ -1,7 +1,7 @@
 import * as WebSocket from 'ws';
 //import http from "https";
 import * as axios from 'axios';
-import http from "http";
+import * as http from 'http';
 //https://github.com/websockets/ws/tree/master/examples/express-session-parse
 
 const port = 8000;
@@ -30,24 +30,17 @@ wss.on('connection', function connection(ws) {
           username = message.username;
           password = message.password;
 
-          let correct = false;
-
           http.get('http://localhost:2000/get/user/?username='+ username+'&password='+password, (resp) => {
             resp.on('data', data => {
-                console.log("Successfullly sent keyword-event to Masterservice"+ data);
+                console.log("Successfullly sent keyword-event to Masterservice "+ data);
+                if(data) allUsers.push(websocket);
+                ws.send(JSON.stringify({type: "login_return", value:data}))
             })
 
         }).on('error', error => {
             console.error(error);
         });
     
-          
-          //https://www.npmjs.com/package/axios
-          //https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
-
-          allUsers.push(websocket);
-          console.log(allUsers.length);
-          ws.send(JSON.stringify({type: "login_return", value:true}))
           break;
         case 'get_groups':
           ws.send(JSON.stringify({type: "get_groups", groups: groups}));   
