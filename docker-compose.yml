@@ -5,6 +5,8 @@ services:
         volumes:
         - db_data:/var/lib/mysql
         restart: always
+        ports: 
+            - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: passme
             MYSQL_DATABASE: WhatsAppDB
@@ -24,10 +26,10 @@ services:
         build: ./WhatsAppClient
         ports: 
             - 80:80
-    server:
-        build: ./Server
-        ports: 
-            - 2000:2000
+    #server:
+    #    build: ./Server
+    #    ports: 
+    #        - 2000:2000
     websocket:
         build: ./websocket
         ports: 

@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { Repository } from './repository/respository';
 import { User } from './entity/user';
+import { request } from 'http';
 
 var server = express();
 var repo : Repository;
@@ -22,16 +23,26 @@ server.get('/get/user/', async  (request, response) => {
         response.send('false');
     }
     
-    var user = repo.findAllUsers().then(data => {
-        return data.find(u => u.username == username && u.password == password);
+    repo.getUser(username).then(data => {
+        console.log(data)
+        if(data == null || data.password != password ){
+            response.send('false');
+        }
+        else{
+            response.send('true');
+        }
     });
-    console.log(user);
-    if(user == null){
-        response.send('false');
-    }
-    
-    response.send('true');
 });
+
+server.get('/get/groupsOfUser/:username', async (request, response) => {
+    console.log('groups');
+    var username = request.params.username;
+
+    repo.getGroupsOfUser(username).then(data  => {
+        console.log(data);
+        response.send(data);
+    })
+})
 
 
 server.listen(port, function(){
