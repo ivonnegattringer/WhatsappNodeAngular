@@ -27,6 +27,10 @@ services:
     server:
         build: ./Server
         ports: 
-            - 8080:8000
+            - 2000:2000
+    websocket:
+        build: ./websocket
+        ports: 
+            - 2000:2000
 volumes:
     db_data:
