@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm";
 import { PrimaryColumn } from "typeorm";
 import {Group} from './group'
 
@@ -8,10 +8,10 @@ export class User{
    // @Column()
     //id: number;
     //@Column()
-    @PrimaryColumn()
+    @PrimaryColumn({type: "varchar2"})
     username : string;
     
-    @Column()
+    @Column({type: "varchar2"})
     password : string;
 
     @ManyToMany(type=> Group)

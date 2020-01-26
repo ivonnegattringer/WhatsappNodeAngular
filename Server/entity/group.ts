@@ -7,6 +7,6 @@ export class Group{
    // @Column()
     //id: number;
     //@Column()
-    @PrimaryColumn()
+    @PrimaryColumn({type: "varchar2"})
     groupname : string;
 }
