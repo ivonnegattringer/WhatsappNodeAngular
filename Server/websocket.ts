@@ -1,12 +1,13 @@
 import * as WebSocket from 'ws';
 //import http from "https";
+import * as axios from 'axios';
 //https://github.com/websockets/ws/tree/master/examples/express-session-parse
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
 let groups = ["linguee", "linda", "rida"];
 
-
+let axiosuse = axios.default;
 
 console.log('Server listening on port ' + port);
 
@@ -30,7 +31,10 @@ wss.on('connection', function connection(ws) {
 
           let correct = false;
 
-          //http://localhost:2000/get/user/?username=test&password=test
+          axiosuse.get('http://localhost:2000/get/user/?username='+ username+'&password='+password)
+                .then(response=> {
+                  console.log("first login response: "+ response);
+                })
           
           allUsers.push(websocket);
           console.log(allUsers.length);
