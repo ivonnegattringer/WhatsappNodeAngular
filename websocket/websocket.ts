@@ -34,7 +34,7 @@ wss.on('connection', function connection(ws) {
           axiosuse.get('http://localhost:2000/get/user/?username='+ username+'&password='+password)
                 .then(response=> {
                   console.log("first login response: "+ response);
-                })
+                });
           
           allUsers.push(websocket);
           console.log(allUsers.length);
