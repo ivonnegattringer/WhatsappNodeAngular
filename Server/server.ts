@@ -1,24 +1,18 @@
-import express from 'express';
+import * as express from 'express';
 
-const app = express();
+var server = express();
 const port = 2000;
 
-// configure middleware
-//app.use(bodyParser.json());
-app.use(express.json());
+server.use(express.static('public'));
+server.use(express.json());
 
 
-//app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use('/users');
-app.use('/groups')
-
-app.get('/api/echo', (request,response)=>{
-    response.send('Hello');
+server.get('/api/echo', (request, response) => {
+    response.send("test");
 });
 
-// define controller per route
-// start server
-app.listen(port, () => {
-    console.log(`Listening at http://localhost:2000/`);
+
+
+server.listen(port, function(){
+    console.log(`API is listening on port ${port}`)
 });
