@@ -36,6 +36,9 @@ wss.on('connection', function connection(ws) {
                   console.log("first login response: "+ response);
                 });
           
+          //https://www.npmjs.com/package/axios
+          //https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
+
           allUsers.push(websocket);
           console.log(allUsers.length);
           ws.send(JSON.stringify({type: "login_return", value:true}))
