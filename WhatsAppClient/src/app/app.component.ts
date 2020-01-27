@@ -45,6 +45,7 @@ export class AppComponent {
   
   disconnect(){
     this.websocket.close();
+    this.showInterface = false;
   }
 
   send(){
@@ -60,6 +61,7 @@ export class AppComponent {
 
   groupChanged(){
     this.websocket.send(`{"type": "change_group", "group": "${this.selectedGroup}"}`);
+    this.gotMessages = '';
   }
 
 }

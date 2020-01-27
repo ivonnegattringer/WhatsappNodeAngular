@@ -39,8 +39,11 @@ server.get('/get/groupsOfUser/:username', async (request, response) => {
     var username = request.params.username;
 
     repo.getGroupsOfUser(username).then(data  => {
-        console.log(data);
-        response.send(data);
+        var groups : Array<String> = [];
+        for( var i = 0; i < data.length; i++){
+            groups.push(data[i].groupname);
+        }
+        response.send(groups);
     })
 })
 

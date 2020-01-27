@@ -6,7 +6,7 @@ import * as http from 'http';
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
-let groups = ["linguee", "linda", "rida"];
+var groups:any = [];
 
 let axiosuse = axios.default;
 
@@ -30,8 +30,8 @@ wss.on('connection', function connection(ws) {
           username = message.username;
           password = message.password;
 
-          http.get('http://localhost:2000/get/user/?username='+ username+'&password='+password, (resp) => {
-            resp.on('data', data => {
+          http.get('http://localhost:2000/get/user/?username='+ username+'&password='+password, async (resp) => {
+            await resp.on('data', data => {
                 console.log("Successfullly sent keyword-event to Masterservice "+ data);
                 if(data) allUsers.push(websocket);
                 ws.send(JSON.stringify({type: "login_return", value:data}))
@@ -40,11 +40,24 @@ wss.on('connection', function connection(ws) {
         }).on('error', error => {
             console.error(error);
         });
-    
+
           break;
         case 'get_groups':
-          ws.send(JSON.stringify({type: "get_groups", groups: groups}));   
 
+          http.get('http://localhost:2000/get/groupsOfUser/'+username, async (resp) => {
+            await resp.on('data', data => {
+              var obj = JSON.parse(data.toString());
+              console.log("Succes get groups: " + obj);
+              ws.send(JSON.stringify({type: "get_groups", groups: data})); 
+              for(let i = 0; i < obj.length; i++){
+                console.log(obj[i]);
+                groups.push(obj[i]);
+                console.log(groups);
+              }
+              ws.send(JSON.stringify({type: "get_groups", groups: groups}));
+            })
+          });
+          
           break;
         case 'change_group':
           websocket.joinedGroup = message.group;
