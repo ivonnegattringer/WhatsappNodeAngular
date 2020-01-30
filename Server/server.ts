@@ -1,7 +1,7 @@
-import * as express from 'express';
-import { Repository } from './repository/respository';
-import { User } from './entity/user';
-import { request } from 'http';
+import * as express from 'express'
+import { Repository } from './repository/respository'
+import { User } from './entity/user'
+import { request } from 'http'
 
 var server = express();
 var repo : Repository;
@@ -14,7 +14,7 @@ server.get('/api/echo', (request, response) => {
     response.send("Success");
 });
 
-server.get('/get/user/', async  (request, response) => {
+server.get('/get/user/',  (request, response) => {
     console.log('Get Users');
     var username = request.query.username;
     var password = request.query.password;
@@ -34,7 +34,7 @@ server.get('/get/user/', async  (request, response) => {
     });
 });
 
-server.get('/get/groupsOfUser/:username', async (request, response) => {
+server.get('/get/groupsOfUser/:username', (request, response) => {
     console.log('groups');
     var username = request.params.username;
 

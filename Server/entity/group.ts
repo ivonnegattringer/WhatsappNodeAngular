@@ -1,5 +1,5 @@
-import { Entity, Column } from "typeorm";
-import { PrimaryColumn } from "typeorm";
+import { Entity, Column } from "typeorm"
+import { PrimaryColumn } from "typeorm"
 
 
 @Entity()

@@ -6,7 +6,6 @@ import * as http from 'http';
 
 const port = 8000;
 const wss = new WebSocket.Server({port:port});
-var groups:any = [];
 
 let axiosuse = axios.default;
 
@@ -17,6 +16,7 @@ var allUsers = new Array();
 wss.on('connection', function connection(ws) {
   var username:string;
   var password;
+  var groups:any = [];
   var websocket = {socket: ws, joinedGroup: ''};
     ws.on('message', data=> {
       let message = JSON.parse(data.toString());
@@ -30,7 +30,7 @@ wss.on('connection', function connection(ws) {
           username = message.username;
           password = message.password;
 
-          http.get('http://localhost:2000/get/user/?username='+ username+'&password='+password, async (resp) => {
+          http.get('http://server:2000/get/user/?username='+ username+'&password='+password, async (resp) => {
             await resp.on('data', data => {
                 console.log("Successfullly sent keyword-event to Masterservice "+ data);
                 if(data) allUsers.push(websocket);
@@ -44,7 +44,7 @@ wss.on('connection', function connection(ws) {
           break;
         case 'get_groups':
 
-          http.get('http://localhost:2000/get/groupsOfUser/'+username, async (resp) => {
+          http.get('http://server:2000/get/groupsOfUser/'+username, async (resp) => {
             await resp.on('data', data => {
               var obj = JSON.parse(data.toString());
               console.log("Succes get groups: " + obj);

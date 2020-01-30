@@ -1,16 +1,17 @@
-import { createConnection, getConnection } from "typeorm";
+import { createConnection, getConnection } from "typeorm"
 import {User} from '../entity/user'
-import { Group } from "../entity/group";
+import { Group } from "../entity/group"
 
 export class Repository{
     public connection = createConnection({
         type: "mysql",
-        host: "172.20.0.2",
+        host: "db",
         port: 3306,
         username: "root",
         password: "passme",
         database: "WhatsAppDB",
-        entities: [User, Group]
+        entities: [User, Group],
+        synchronize: true
     });
 
     constructor(){
@@ -18,6 +19,7 @@ export class Repository{
     }
 
     private initDatabase(){
+        
         console.log("init Database");
         this.findAllUsers().then(data => {
             if(data.length != 0) return;
@@ -54,11 +56,11 @@ export class Repository{
                 console.log("inserted user: test");
     
                 con.synchronize();
-            })
-        })
+            }).catch(er=> console.log(er))
+        }).catch(er=> console.log(er))
     }
 
-    public async getUser(username : string) {
+    public getUser(username : string) {
         const user = getConnection()
         .createQueryBuilder()
         .select("user")
@@ -69,7 +71,7 @@ export class Repository{
         return user;
     }
 
-    public async getGroupsOfUser(username : string) {
+    public getGroupsOfUser(username : string) {
         const groups = getConnection()
         .createQueryBuilder()
         .select("group")
@@ -81,17 +83,17 @@ export class Repository{
         return groups;
     }
 
-    public async findAllUsers():Promise<User[]>{
+    public findAllUsers():Promise<User[]>{
         console.log("finde")
-        let savedUsers = await this.connection.then(async con => {
-            return await con.manager.find(User);
+        let savedUsers = this.connection.then(con => {
+            return con.manager.find(User);
         });
         return savedUsers;
     }
 
-    public async findAllGroups(){
-        let savedGroups = await this.connection.then(async con => {
-            return await con.manager.find(Group);
+    public findAllGroups(){
+        let savedGroups = this.connection.then( con => {
+            return  con.manager.find(Group);
         });
         return savedGroups;
     }
